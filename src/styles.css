@@ -1,0 +1,210 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system definition.
+ *
+ * The @theme inline block maps CSS custom properties to Tailwind utility
+ * classes (e.g. --color-primary -> bg-primary, text-primary).
+ *
+ * The :root and .dark blocks define the actual color values using oklch.
+ * All colors MUST use oklch format.
+ *
+ * To add a new semantic color:
+ * 1. Add the variable to :root (light value) and .dark (dark value)
+ * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Omega palette */
+  --color-void: var(--omega-void);
+  --color-deep: var(--omega-deep);
+  --color-carbon: var(--omega-carbon);
+  --color-slate: var(--omega-slate);
+  --color-muted-text: var(--omega-muted);
+  --color-crisp: var(--omega-white);
+  --color-amber: var(--omega-amber);
+  --color-cosmic: var(--omega-cosmic-blue);
+  --color-emerald: var(--omega-emerald);
+  --color-amethyst: var(--omega-amethyst);
+
+  --font-display: var(--font-omega-display);
+  --font-sans: var(--font-omega-sans);
+  --font-mono: var(--font-omega-mono);
+}
+
+:root {
+  --radius: 0.75rem;
+
+  --omega-void: #050505;
+  --omega-deep: #0f0f12;
+  --omega-carbon: #1a1a1f;
+  --omega-slate: #2a2a32;
+  --omega-muted: #8e8e93;
+  --omega-white: #ffffff;
+  --omega-amber: #ff9f0a;
+  --omega-cosmic-blue: #1f2232;
+  --omega-emerald: #1b2b24;
+  --omega-amethyst: #241f32;
+
+  --font-omega-display: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+  --font-omega-sans: "Satoshi", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-omega-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --background: var(--omega-void);
+  --foreground: var(--omega-white);
+  --card: var(--omega-deep);
+  --card-foreground: var(--omega-white);
+  --popover: var(--omega-deep);
+  --popover-foreground: var(--omega-white);
+  --primary: var(--omega-amber);
+  --primary-foreground: #100a00;
+  --secondary: var(--omega-carbon);
+  --secondary-foreground: var(--omega-white);
+  --muted: var(--omega-carbon);
+  --muted-foreground: var(--omega-muted);
+  --accent: var(--omega-carbon);
+  --accent-foreground: var(--omega-white);
+  --destructive: #b3261e;
+  --destructive-foreground: #ffffff;
+  --border: var(--omega-slate);
+  --input: var(--omega-slate);
+  --ring: var(--omega-amber);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  body {
+    background-color: var(--color-void);
+    color: var(--color-crisp);
+    font-family: var(--font-sans);
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-amber) 35%, transparent);
+  }
+}
+
+@utility container-omega {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+
+@media (min-width: 768px) {
+  .container-omega {
+    padding-inline: 40px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container-omega {
+    padding-inline: 72px;
+  }
+}
+
+@utility micro-label {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+  color: var(--color-muted-text);
+  font-weight: 400;
+}
+
+@utility display-text {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal[data-visible="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes omega-pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.flow-pulse {
+  animation: omega-pulse 2.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .flow-pulse {
+    animation: none;
+  }
+}
+
