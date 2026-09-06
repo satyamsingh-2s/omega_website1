@@ -76,7 +76,7 @@ export const features: Feature[] = [
       "Expected duration belongs to executable leaf work and rolls upward.",
       "Focus sessions happen on leaf nodes, where work is concrete.",
     ],
-    asset: { id: "ASSET 01", name: "KNOWLEDGE TREE", width: 620, height: 760, ratio: "31:38" },
+    asset: { id: "ASSET 01", name: "KNOWLEDGE TREE", width: 580, height: 720, ratio: "31:38" },
   },
   {
     number: "02",
