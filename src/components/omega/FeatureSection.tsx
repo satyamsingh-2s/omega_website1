@@ -1,8 +1,37 @@
-import { AssetFrame, Eyebrow, FeatureBullets, Reveal, SectionContainer } from "./primitives";
+import {
+  AssetFrame,
+  Eyebrow,
+  FeatureBullets,
+  Reveal,
+  SectionContainer,
+  KnowledgeTreeDiagram,
+  AIStructureDiagram,
+  MemoryStackDiagram,
+  FootprintsDiagram,
+  ActiveFlowIndicator,
+} from "./primitives";
 import type { Feature } from "@/data/landingContent";
+import { useMemo } from "react";
+
+function getDiagramForFeature(number: string) {
+  switch (number) {
+    case "01":
+      return <KnowledgeTreeDiagram />;
+    case "02":
+      return <AIStructureDiagram />;
+    case "05":
+      return <MemoryStackDiagram />;
+    case "06":
+      return <FootprintsDiagram />;
+    default:
+      return null;
+  }
+}
 
 export function FeatureSection({ feature, index }: { feature: Feature; index: number }) {
   const flipped = index % 2 === 1;
+  const diagram = useMemo(() => getDiagramForFeature(feature.number), [feature.number]);
+  const hasActiveFlowIndicator = feature.number === "03";
 
   return (
     <SectionContainer tone={flipped ? "deep" : "void"}>
@@ -20,8 +49,11 @@ export function FeatureSection({ feature, index }: { feature: Feature; index: nu
               ))}
             </h2>
             {feature.subline ? (
-              <p className="display-text mt-3 text-[20px] text-amber italic md:text-[24px]">{feature.subline}</p>
+              <p className="display-text mt-3 text-[20px] text-amber italic md:text-[24px]">
+                {feature.subline}
+              </p>
             ) : null}
+            {hasActiveFlowIndicator ? <ActiveFlowIndicator className="mt-5" /> : null}
           </Reveal>
 
           <div className="mt-7 max-w-[520px] space-y-5">
@@ -36,7 +68,7 @@ export function FeatureSection({ feature, index }: { feature: Feature; index: nu
             <div className="mt-9 grid gap-4 sm:grid-cols-2">
               {feature.paths.map((path, i) => (
                 <Reveal key={path.title} delay={200 + i * 100}>
-                  <div className="h-full rounded-xl border border-slate bg-carbon/60 p-6 transition-colors duration-200 hover:border-muted-text/50">
+                  <div className="interactive-card h-full rounded-xl border border-slate bg-carbon/60 p-6">
                     <p className="text-[16px] font-medium text-crisp">{path.title}</p>
                     <p className="mt-3 text-[15px] leading-relaxed text-crisp/60">{path.copy}</p>
                   </div>
@@ -53,14 +85,21 @@ export function FeatureSection({ feature, index }: { feature: Feature; index: nu
         </div>
 
         <Reveal
+          variant={diagram ? "soft" : "asset"}
           delay={160}
           className={flipped ? "lg:col-span-6 lg:order-1" : "lg:col-span-6 lg:justify-self-end"}
         >
           <div className="relative">
-            <AssetFrame {...feature.asset} glow={feature.glow ?? false} />
+            <AssetFrame
+              {...feature.asset}
+              glow={feature.glow ?? false}
+              diagram={diagram ?? undefined}
+            />
             {feature.extra ? (
               <div className="mt-6 sm:absolute sm:-bottom-10 sm:-right-8 sm:mt-0 sm:w-[320px]">
-                <AssetFrame {...feature.extra} />
+                <Reveal delay={320}>
+                  <AssetFrame {...feature.extra} />
+                </Reveal>
               </div>
             ) : null}
           </div>

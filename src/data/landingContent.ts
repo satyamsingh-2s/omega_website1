@@ -6,7 +6,7 @@ export const nav = {
     { label: "Features", href: "#features" },
     { label: "The Future", href: "#horizon" },
   ],
-  cta: "Back the project →",
+  cta: "Join the journey →",
 };
 
 export const hero = {
@@ -97,7 +97,13 @@ export const features: Feature[] = [
         copy: "Build the hierarchy node by node with complete control.",
       },
     ],
-    asset: { id: "ASSET 02", name: "CHART A PATH / AI CREATION", width: 480, height: 620, ratio: "27:34" },
+    asset: {
+      id: "ASSET 02",
+      name: "CHART A PATH / AI CREATION",
+      width: 480,
+      height: 620,
+      ratio: "27:34",
+    },
   },
   {
     number: "03",
@@ -113,7 +119,13 @@ export const features: Feature[] = [
       "Tap from anywhere to return directly to execution.",
       "Pause without losing the work thread.",
     ],
-    asset: { id: "ASSET 03", name: "ACTIVE FLOW PRODUCT SCREEN", width: 380, height: 520, ratio: "13:18" },
+    asset: {
+      id: "ASSET 03",
+      name: "ACTIVE FLOW PRODUCT SCREEN",
+      width: 380,
+      height: 520,
+      ratio: "13:18",
+    },
     glow: true,
   },
   {
@@ -130,7 +142,13 @@ export const features: Feature[] = [
       "Intended and Invested, side by side.",
       "Immersive focus mode for long sessions.",
     ],
-    asset: { id: "ASSET 04", name: "DESK OMEGA COMPOSITION", width: 400, height: 580, ratio: "15:21" },
+    asset: {
+      id: "ASSET 04",
+      name: "DESK OMEGA COMPOSITION",
+      width: 400,
+      height: 580,
+      ratio: "15:21",
+    },
     glow: true,
   },
   {
@@ -147,8 +165,13 @@ export const features: Feature[] = [
       "Text context preserved beside the work.",
       "Analog note attachments can bridge handwritten and digital thinking.",
     ],
-    asset: { id: "ASSET 05", name: "REVISION NOTES DIALOG", width: 440, height: 580, ratio: "27:34" },
-    
+    asset: {
+      id: "ASSET 05",
+      name: "REVISION NOTES DIALOG",
+      width: 440,
+      height: 580,
+      ratio: "27:34",
+    },
   },
   {
     number: "06",
@@ -165,7 +188,13 @@ export const features: Feature[] = [
       "No streaks to break.",
       "No red overdue alarms.",
     ],
-    asset: { id: "ASSET 06", name: "FOOTPRINTS / HISTORY SCREEN",width: 480, height: 620, ratio: "13:18" },
+    asset: {
+      id: "ASSET 06",
+      name: "FOOTPRINTS / HISTORY SCREEN",
+      width: 480,
+      height: 620,
+      ratio: "13:18",
+    },
   },
 ];
 
@@ -188,7 +217,11 @@ export const spaces = [
 ];
 
 export const systemFlow = {
-  headline: ["Structure when you need clarity.", "Execute when you are ready.", "Return when life happens."],
+  headline: [
+    "Structure when you need clarity.",
+    "Execute when you are ready.",
+    "Return when life happens.",
+  ],
   steps: [
     "JOURNEY",
     "CHART A PATH",
@@ -239,45 +272,30 @@ export const horizon = {
   ],
 };
 
-export const pricing = {
+export const funding = {
   eyebrow: "FUND THE FUTURE OF OMEGA",
-  headline: "Built by independent creators who believe in craftsmanship and user sovereignty.",
-  copy: "No trackers. No surveillance. Just beautiful, local-first engineering designed to last.",
-  tiers: [
+  headline: "Join the journey of Omega.",
+  copy: [
+    "Omega is being built independently, with craftsmanship and user sovereignty at the center.",
+    "It is a long-term project — shaped through ideas, experiments, engineering, and the people who choose to follow its journey.",
+    "There are many ways to become part of what comes next.",
+  ],
+  waysToJoinLabel: "WAYS TO JOIN",
+  paths: [
     {
-      price: "$15",
-      name: "The Offline Pass",
-      copy: "Lifetime access to core features.",
-      points: ["Knowledge Trees", "Active Flow", "Desk Omega", "Local-first core experience"],
-      cta: "Choose $15",
-      featured: false,
+      title: "FUND",
+      copy: "Help make continued development possible.",
     },
     {
-      price: "$45",
-      name: "The Founding Companion",
-      copy: "For the people who want to shape what Omega becomes.",
-      points: [
-        "Lifetime core access",
-        "Early access to selected future capabilities where offered",
-        "Recognition on the digital Wall of Founders",
-      ],
-      cta: "Choose $45",
-      featured: true,
-      badge: "MOST CHOSEN",
+      title: "SPONSOR",
+      copy: "Support a specific part of the journey.",
     },
     {
-      price: "$120",
-      name: "The Journey Patron",
-      copy: "Back the long road and stay close to the build.",
-      points: [
-        "All previous rewards",
-        "Direct input into the roadmap through builder updates",
-        "Limited-edition theme pack",
-      ],
-      cta: "Choose $120",
-      featured: false,
+      title: "COLLABORATE",
+      copy: "Bring an idea, skill, or perspective to Omega.",
     },
   ],
+  cta: "JOIN THE JOURNEY →",
 };
 
 export const finalStatement = {

@@ -98,6 +98,16 @@
   --border: var(--omega-slate);
   --input: var(--omega-slate);
   --ring: var(--omega-amber);
+
+  --motion-fast: 180ms;
+  --motion-normal: 300ms;
+  --motion-reveal: 600ms;
+  --motion-slow: 900ms;
+  --motion-structural: 1100ms;
+
+  --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.25, 0.8, 0.25, 1);
+  --ease-ui: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @layer base {
@@ -169,42 +179,429 @@
 
 .reveal {
   opacity: 0;
-  transform: translateY(26px);
+  transform: translateY(14px);
+  filter: blur(3px);
   transition:
-    opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
-    transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+    opacity var(--motion-reveal) var(--ease-standard),
+    transform var(--motion-reveal) var(--ease-standard),
+    filter var(--motion-reveal) var(--ease-standard);
+  will-change: transform, opacity, filter;
 }
 
 .reveal[data-visible="true"] {
   opacity: 1;
-  transform: none;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+.reveal-asset {
+  opacity: 0;
+  transform: translateY(18px) scale(0.97);
+  transition:
+    opacity var(--motion-slow) var(--ease-standard),
+    transform var(--motion-slow) var(--ease-standard);
+  will-change: transform, opacity;
+}
+
+.reveal-asset[data-visible="true"] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.reveal-nav {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition:
+    opacity 400ms var(--ease-standard),
+    transform 400ms var(--ease-standard);
+}
+
+.reveal-nav[data-visible="true"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-soft {
+  opacity: 0;
+  transition: opacity 500ms var(--ease-standard);
+}
+
+.reveal-soft[data-visible="true"] {
+  opacity: 1;
 }
 
 @keyframes omega-pulse {
   0%,
   100% {
-    opacity: 0.5;
+    opacity: 0.75;
+    transform: scale(1);
   }
   50% {
     opacity: 1;
+    transform: scale(1.04);
   }
 }
 
 .flow-pulse {
-  animation: omega-pulse 2.6s ease-in-out infinite;
+  animation: omega-pulse 3s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes draw-line {
+  from {
+    stroke-dashoffset: var(--draw-length, 1000);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.draw-line {
+  stroke-dasharray: var(--draw-length, 1000);
+  stroke-dashoffset: var(--draw-length, 1000);
+  transition: stroke-dashoffset var(--motion-structural) var(--ease-standard);
+}
+
+.draw-line[data-drawn="true"] {
+  stroke-dashoffset: 0;
+}
+
+@keyframes draw-border {
+  0% {
+    background-position:
+      -100% 0,
+      100% 100%,
+      0 -100%,
+      100% 0;
+  }
+  100% {
+    background-position:
+      0 0,
+      0 100%,
+      100% -100%,
+      -100% 0;
+  }
+}
+
+.asset-frame-border {
+  position: relative;
+}
+
+.asset-frame-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background:
+    linear-gradient(90deg, var(--color-slate), var(--color-slate)) top/0 1px no-repeat,
+    linear-gradient(0deg, var(--color-slate), var(--color-slate)) right/1px 0 no-repeat,
+    linear-gradient(-90deg, var(--color-slate), var(--color-slate)) bottom/0 1px no-repeat,
+    linear-gradient(180deg, var(--color-slate), var(--color-slate)) left/1px 0 no-repeat;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  transition: background-size var(--motion-structural) var(--ease-standard);
+  transition-delay: 150ms;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.asset-frame-border[data-drawn="true"]::before {
+  background-size:
+    100% 1px,
+    1px 100%,
+    100% 1px,
+    1px 100%;
+}
+
+.stack-layer {
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 450ms var(--ease-standard),
+    transform 450ms var(--ease-standard);
+}
+
+.stack-layer[data-visible="true"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.progress-fill {
+  width: 0%;
+  transition: width var(--motion-structural) var(--ease-standard);
+}
+
+.progress-fill[data-filled="true"] {
+  width: var(--progress-width, 100%);
+}
+
+.path-step {
+  opacity: 0;
+  transform: translateX(-6px);
+  transition:
+    opacity 500ms var(--ease-standard),
+    transform 500ms var(--ease-standard);
+}
+
+.path-step[data-active="true"] {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.journey-indicator {
+  position: fixed;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 40;
+}
+
+.journey-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  border: 1px solid var(--color-slate);
+  background: transparent;
+  transition:
+    background-color 300ms var(--ease-standard),
+    border-color 300ms var(--ease-standard),
+    transform 300ms var(--ease-standard);
+}
+
+.journey-dot[data-active="true"] {
+  background: var(--color-amber);
+  border-color: var(--color-amber);
+  transform: scale(1.15);
+}
+
+.journey-line {
+  width: 1px;
+  height: 20px;
+  margin-left: 3.5px;
+  background: var(--color-slate);
+  opacity: 0.5;
+}
+
+.journey-label {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-muted-text);
+  opacity: 0;
+  white-space: nowrap;
+  transition:
+    opacity 250ms var(--ease-standard),
+    color 250ms var(--ease-standard);
+}
+
+.journey-item:hover .journey-label,
+.journey-item[data-active="true"] .journey-label {
+  opacity: 1;
+}
+
+.journey-item[data-active="true"] .journey-label {
+  color: var(--color-amber);
+}
+
+.btn-arrow {
+  display: inline-block;
+  transition: transform 200ms var(--ease-standard);
+}
+
+a:hover .btn-arrow,
+button:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+.interactive-card {
+  transition:
+    transform var(--motion-fast) var(--ease-standard),
+    border-color var(--motion-fast) var(--ease-standard),
+    background-color var(--motion-fast) var(--ease-standard);
+}
+
+.interactive-card:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in oklab, var(--color-slate) 140%, white);
+}
+
+.participation-path h3 {
+  position: relative;
+  transition:
+    color var(--motion-fast) var(--ease-standard),
+    transform var(--motion-fast) var(--ease-standard),
+    letter-spacing var(--motion-fast) var(--ease-standard);
+}
+
+.participation-path p {
+  transition:
+    color var(--motion-fast) var(--ease-standard),
+    transform var(--motion-fast) var(--ease-standard);
+}
+
+.participation-path h3::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -8px;
+  height: 1px;
+  background: var(--color-amber);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--motion-normal) var(--ease-standard);
+}
+
+.group:hover .participation-path h3 {
+  color: var(--color-crisp);
+  letter-spacing: 0.22em;
+  transform: translateY(-1px);
+}
+
+.group:hover .participation-path h3::after {
+  transform: scaleX(1);
+}
+
+.group:hover .participation-path p {
+  color: color-mix(in oklab, var(--color-crisp) 78%, white);
+  transform: translateY(-1px);
+}
+
+.knowledge-tree-node {
+  opacity: 0;
+  transform: scale(0.85);
+  transition:
+    opacity 350ms var(--ease-standard),
+    transform 350ms var(--ease-standard);
+}
+
+.knowledge-tree-node[data-visible="true"] {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.ai-idea-node {
+  opacity: 0;
+  transform: scale(0.9);
+  transition:
+    opacity 500ms var(--ease-standard),
+    transform 500ms var(--ease-standard);
+}
+
+.ai-idea-node[data-visible="true"] {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.ai-branch {
+  opacity: 0;
+  transform: translateX(-10px);
+  transition:
+    opacity 450ms var(--ease-standard),
+    transform 450ms var(--ease-standard);
+}
+
+.ai-branch[data-visible="true"] {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.footprint-item {
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 400ms var(--ease-standard),
+    transform 400ms var(--ease-standard);
+}
+
+.footprint-item[data-visible="true"] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tracker-card-omega {
+  transition:
+    border-color 600ms var(--ease-standard),
+    box-shadow 600ms var(--ease-standard),
+    background-color 600ms var(--ease-standard);
+}
+
+.tracker-card-omega[data-emphasized="true"] {
+  border-color: color-mix(in oklab, var(--color-amber) 45%, transparent);
+  box-shadow: 0 24px 80px -60px var(--color-amber);
+}
+
+@media (max-width: 768px) {
+  .reveal {
+    transform: translateY(10px);
+  }
+  .reveal-asset {
+    transform: translateY(12px) scale(0.98);
+  }
+  .journey-indicator {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
+  .reveal,
+  .reveal-asset,
+  .reveal-nav,
+  .reveal-soft,
+  .stack-layer,
+  .path-step,
+  .knowledge-tree-node,
+  .ai-idea-node,
+  .ai-branch,
+  .footprint-item {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: blur(0) !important;
+    transition: none !important;
   }
   .flow-pulse {
     animation: none;
   }
+  .draw-line {
+    stroke-dashoffset: 0;
+  }
+  .asset-frame-border::before {
+    background-size:
+      100% 1px,
+      1px 100%,
+      100% 1px,
+      1px 100%;
+    transition: none;
+  }
+  .progress-fill {
+    width: var(--progress-width, 100%) !important;
+    transition: none !important;
+  }
+  .interactive-card:hover {
+    transform: none;
+  }
+  .group:hover .participation-path h3,
+  .group:hover .participation-path p {
+    transform: none;
+    letter-spacing: inherit;
+  }
+  .group:hover .participation-path h3::after {
+    transform: scaleX(0);
+  }
+  a:hover .btn-arrow,
+  button:hover .btn-arrow {
+    transform: none;
+  }
 }
-
