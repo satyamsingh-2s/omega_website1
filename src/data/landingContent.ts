@@ -16,8 +16,8 @@ export const hero = {
   headlineAccent: "Omega stays with you.",
   identity: "PERSONAL JOURNEY ASSISTANT",
   copy: "Structure. Focus. Flow. A dark, physical cockpit for the long projects you refuse to abandon — built to hold your context until you're ready to continue.",
-  cta: "Back the project →",
-  micro: "LIFETIME ACCESS FROM $15",
+  cta: "Get the app →",
+  micro: "LIFETIME ACCESS · NO SUBSCRIPTION",
 };
 
 export const problem = {
@@ -284,7 +284,7 @@ export const funding = {
   paths: [
     {
       title: "FUND",
-      copy: "Help make continued development possible.",
+      copy: "Help Omega grow faster.",
     },
     {
       title: "SPONSOR",
@@ -298,6 +298,22 @@ export const funding = {
   cta: "JOIN THE JOURNEY →",
 };
 
+export const founder = {
+  eyebrow: "THE PERSON BEHIND OMEGA",
+  headline: "Built by Satyam Singh.",
+  role: "ANDROID DEVELOPER · PRODUCT BUILDER",
+  copy: [
+    "Omega is an independent project I started to build a different kind of productivity system — one that gives structure and direction without taking control away from the person using it.",
+    "I design and build Omega end to end, from the product and Android application to the systems behind it.",
+  ],
+  contactPrompt: ["Have a question about Omega?", "Want to build something together?"],
+  contactLinks: [
+    { label: "Email →", href: "mailto:satyamsingh92637@gmail.com" },
+    { label: "LinkedIn →", href: "https://www.linkedin.com/in/satyam-singh-2s" },
+    { label: "My Website →", href: "https://satyamsingh2s.xyz" },
+  ],
+};
+
 export const finalStatement = {
   headline: "This is only the beginning.",
   copy: [
@@ -305,16 +321,17 @@ export const finalStatement = {
     "But it will keep moving forward.",
   ],
   emphasis: "You choose the journey. Omega stays with you.",
-  cta: "Back the project today →",
+  cta: "Get the app →",
 };
 
 export const footer = {
   logo: "OMEGA",
   statement: "Local-first. No trackers. Built for the long journey.",
+  termsHref: "/terms",
   links: [
     { label: "Product", href: "#features" },
     { label: "Roadmap", href: "#horizon" },
-    { label: "Contact", href: "#pricing" },
+    { label: "Contact", href: "#builder" },
     { label: "Privacy", href: "#privacy" },
   ],
 };

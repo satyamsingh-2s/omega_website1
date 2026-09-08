@@ -1,3 +1,4 @@
+import { useState, type CSSProperties } from "react";
 import {
   AssetFrame,
   Eyebrow,
@@ -11,6 +12,7 @@ import {
   finalStatement,
   footer,
   funding,
+  founder,
   horizon,
   localFirst,
   spaces,
@@ -19,7 +21,7 @@ import {
 
 export function ProductSpacesSection() {
   return (
-    <SectionContainer id="features" tone="deep">
+    <SectionContainer tone="deep">
       <Reveal>
         <Eyebrow>THE THREE PRODUCT SPACES</Eyebrow>
       </Reveal>
@@ -169,12 +171,12 @@ export function FundingSection() {
 
         <div className="mt-10 space-y-5">
           {funding.copy.map((p, i) => (
-          <Reveal key={p} delay={220 + i * 80}>
-            <p className="max-w-[640px] text-[17px] leading-relaxed text-crisp/65 md:text-[19px]">
-              {p}
-            </p>
-          </Reveal>
-        ))}
+            <Reveal key={p} delay={220 + i * 80}>
+              <p className="max-w-[640px] text-[17px] leading-relaxed text-crisp/65 md:text-[19px]">
+                {p}
+              </p>
+            </Reveal>
+          ))}
         </div>
 
         <Reveal delay={500}>
@@ -183,22 +185,22 @@ export function FundingSection() {
 
         <div className="mt-10 grid w-full gap-10 md:grid-cols-3 md:gap-6">
           {funding.paths.map((path, i) => (
-          <Reveal key={path.title} delay={580 + i * 90}>
-            <div className="participation-path group flex flex-col items-center px-4 text-center md:items-start md:text-left">
-              <h3 className="micro-label text-[14px] text-crisp/80">{path.title}</h3>
-              <p className="mt-4 max-w-[280px] text-[16px] leading-relaxed text-crisp/60 md:text-[17px]">
-                {path.copy}
-              </p>
-            </div>
-          </Reveal>
-        ))}
+            <Reveal key={path.title} delay={580 + i * 90}>
+              <div className="participation-path group flex flex-col items-center px-4 text-center md:items-start md:text-left">
+                <h3 className="micro-label text-[14px] text-crisp/80">{path.title}</h3>
+                <p className="mt-4 max-w-[280px] text-[16px] leading-relaxed text-crisp/60 md:text-[17px]">
+                  {path.copy}
+                </p>
+              </div>
+            </Reveal>
+          ))}
         </div>
 
         <Reveal delay={880}>
           <div className="mt-20">
-            <a href="#contact">
-              <PrimaryButton size="lg">{funding.cta}</PrimaryButton>
-            </a>
+            <PrimaryButton href="#builder" size="lg">
+              {funding.cta}
+            </PrimaryButton>
           </div>
         </Reveal>
       </div>
@@ -206,12 +208,103 @@ export function FundingSection() {
   );
 }
 
+export function AboutMeSection() {
+  const [contactExpanded, setContactExpanded] = useState(false);
+
+  return (
+    <SectionContainer id="builder" tone="void" size="major">
+      <div className="max-w-[800px]">
+        <Reveal>
+          <Eyebrow accent>{founder.eyebrow}</Eyebrow>
+        </Reveal>
+        <Reveal delay={100}>
+          <h2 className="display-text mt-7 text-[44px] text-crisp md:text-[64px] xl:text-[72px]">
+            {founder.headline}
+          </h2>
+        </Reveal>
+        <Reveal delay={180}>
+          <p className="micro-label mt-6 text-amber/80">{founder.role}</p>
+        </Reveal>
+
+        <div className="mt-10 max-w-[760px] space-y-5 md:mt-12">
+          {founder.copy.map((paragraph, index) => (
+            <Reveal key={paragraph} delay={260 + index * 80}>
+              <p className="text-[17px] leading-relaxed text-crisp/65 md:text-[19px]">
+                {paragraph}
+              </p>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal delay={440}>
+          <div className="mt-14 md:mt-16">
+            <p className="text-[17px] leading-relaxed text-crisp/80 md:text-[19px]">
+              {founder.contactPrompt.map((line) => (
+                <span key={line} className="block">
+                  {line}
+                </span>
+              ))}
+            </p>
+            <button
+              type="button"
+              aria-expanded={contactExpanded}
+              aria-controls="omega-contact-links"
+              onClick={() => setContactExpanded((expanded) => !expanded)}
+              className="contact-reveal-button mt-6 inline-flex items-center gap-2 text-[16px] font-medium text-amber focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber"
+            >
+              Get in touch <span aria-hidden>→</span>
+            </button>
+            <div
+              id="omega-contact-links"
+              className="contact-links"
+              data-expanded={contactExpanded}
+              aria-hidden={!contactExpanded}
+            >
+              <div className="contact-links-inner">
+                {founder.contactLinks.map((link, index) => (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    target={link.href.startsWith("http") ? "_blank" : undefined}
+                    rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    className="contact-link"
+                    style={{ "--contact-link-delay": `${index * 60}ms` } as CSSProperties}
+                    tabIndex={contactExpanded ? 0 : -1}
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </SectionContainer>
+  );
+}
+
+export function BuilderTransition() {
+  return (
+    <section className="bg-deep px-5 pb-[112px] pt-2 text-center sm:px-10 md:pb-[144px] xl:px-[72px]">
+      <Reveal>
+        <p className="display-text text-[26px] leading-[1.1] text-crisp/55 italic md:text-[34px]">
+          <span className="block">And behind it,</span>
+          <span className="block">one builder.</span>
+        </p>
+      </Reveal>
+    </section>
+  );
+}
+
 export function FinalStatementSection() {
   return (
-    <SectionContainer size="major">
+    <SectionContainer id="future" size="major">
       <div className="mx-auto max-w-[760px] text-center">
         <Reveal>
-          <h2 className="display-text text-[44px] text-crisp md:text-[76px] xl:text-[88px]">
+          <Eyebrow accent className="justify-center">
+            06 · FUTURE
+          </Eyebrow>
+          <h2 className="display-text mt-6 text-[44px] text-crisp md:text-[76px] xl:text-[88px]">
             {finalStatement.headline}
           </h2>
         </Reveal>
@@ -240,20 +333,31 @@ export function FinalStatementSection() {
 export function Footer() {
   return (
     <footer className="border-t border-slate bg-void py-12">
-      <div className="container-omega flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
-        <p className="micro-label text-[13px] tracking-[0.32em] text-crisp">{footer.logo}</p>
-        <nav className="flex flex-wrap gap-6">
-          {footer.links.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="text-[14px] text-crisp/55 transition-[color,transform] duration-150 ease-[var(--ease-ui)] hover:text-crisp hover:-translate-y-[1px]"
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
-        <p className="micro-label">{footer.statement}</p>
+      <div className="container-omega space-y-9">
+        <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+          <p className="micro-label text-[13px] tracking-[0.32em] text-crisp">{footer.logo}</p>
+          <nav className="flex flex-wrap gap-6">
+            {footer.links.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                className="text-[14px] text-crisp/55 transition-[color,transform] duration-150 ease-[var(--ease-ui)] hover:text-crisp hover:-translate-y-[1px]"
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
+          <p className="micro-label">{footer.statement}</p>
+        </div>
+        <div className="flex flex-col gap-4 border-t border-slate/60 pt-6 text-[13px] text-crisp/40 sm:flex-row sm:items-center sm:justify-between">
+          <p>© Satyam Singh</p>
+          <a
+            href={footer.termsHref}
+            className="transition-colors duration-150 ease-[var(--ease-ui)] hover:text-crisp/70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber"
+          >
+            Terms &amp; Conditions
+          </a>
+        </div>
       </div>
     </footer>
   );

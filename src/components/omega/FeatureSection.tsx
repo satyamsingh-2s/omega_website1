@@ -4,9 +4,6 @@ import {
   FeatureBullets,
   Reveal,
   SectionContainer,
-  KnowledgeTreeDiagram,
-  AIStructureDiagram,
-  MemoryStackDiagram,
   FootprintsDiagram,
   ActiveFlowIndicator,
 } from "./primitives";
@@ -15,12 +12,6 @@ import { useMemo } from "react";
 
 function getDiagramForFeature(number: string) {
   switch (number) {
-    case "01":
-      return <KnowledgeTreeDiagram />;
-    case "02":
-      return <AIStructureDiagram />;
-    case "05":
-      return <MemoryStackDiagram />;
     case "06":
       return <FootprintsDiagram />;
     default:

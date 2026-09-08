@@ -4,6 +4,8 @@ import { Navigation } from "@/components/omega/Navigation";
 import { HeroSection, ProblemSection, ShiftSection } from "@/components/omega/StorySections";
 import { FeatureSection } from "@/components/omega/FeatureSection";
 import {
+  AboutMeSection,
+  BuilderTransition,
   FinalStatementSection,
   Footer,
   FundingSection,
@@ -25,7 +27,9 @@ const journeySections = [
   { id: "system", label: "03 · The Shift" },
   { id: "features", label: "04 · Features" },
   { id: "horizon", label: "05 · The Horizon" },
-  { id: "join", label: "06 · Join" },
+  { id: "future", label: "06 · Future" },
+  { id: "join", label: "07 · Join" },
+  { id: "builder", label: "08 · Builder" },
 ];
 
 function useActiveSection(sectionIds: string[]) {
@@ -38,28 +42,29 @@ function useActiveSection(sectionIds: string[]) {
 
     if (elements.length === 0) return;
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        const visible: { index: number; ratio: number }[] = [];
-        entries.forEach((entry) => {
-          const idx = sectionIds.indexOf(entry.target.id);
-          if (idx >= 0 && entry.isIntersecting) {
-            visible.push({ index: idx, ratio: entry.intersectionRatio });
-          }
-        });
-        if (visible.length > 0) {
-          visible.sort((a, b) => b.ratio - a.ratio);
-          setActive(visible[0].index);
-        }
-      },
-      {
-        threshold: [0.15, 0.25, 0.4, 0.6],
-        rootMargin: "-20% 0px -40% 0px",
-      },
-    );
+    let frameId: number | null = null;
+    const updateActiveSection = () => {
+      frameId = null;
+      const readingPosition = window.scrollY + window.innerHeight * 0.45;
+      let nextActive = 0;
 
-    elements.forEach((el) => io.observe(el));
-    return () => io.disconnect();
+      elements.forEach((element, index) => {
+        if (element.offsetTop <= readingPosition) nextActive = index;
+      });
+      setActive(nextActive);
+    };
+    const requestUpdate = () => {
+      if (frameId === null) frameId = window.requestAnimationFrame(updateActiveSection);
+    };
+
+    requestUpdate();
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+    return () => {
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+      if (frameId !== null) window.cancelAnimationFrame(frameId);
+    };
   }, [sectionIds]);
 
   return active;
@@ -90,15 +95,19 @@ function Index() {
         <HeroSection />
         <ProblemSection />
         <ShiftSection />
-        {features.map((feature, index) => (
-          <FeatureSection key={feature.number} feature={feature} index={index} />
-        ))}
-        <ProductSpacesSection />
-        <SystemFlowSection />
-        <LocalFirstSection />
+        <div id="features">
+          {features.map((feature, index) => (
+            <FeatureSection key={feature.number} feature={feature} index={index} />
+          ))}
+          <ProductSpacesSection />
+          <SystemFlowSection />
+          <LocalFirstSection />
+        </div>
         <HorizonSection />
-        <FundingSection />
         <FinalStatementSection />
+        <FundingSection />
+        <BuilderTransition />
+        <AboutMeSection />
       </main>
       <Footer />
     </div>

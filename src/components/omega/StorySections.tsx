@@ -52,7 +52,7 @@ export function HeroSection() {
         <Reveal variant="asset" delay={500} className="lg:col-span-6 lg:justify-self-end">
           <div className="relative w-full max-w-[480px]">
             <AssetFrame
-              id="ASSET 01"
+              id="ASSET 00"
               name="OMEGA HERO VISUAL"
               width={480}
               height={620}

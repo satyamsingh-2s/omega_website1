@@ -354,7 +354,7 @@
 
 .journey-indicator {
   position: fixed;
-  left: 24px;
+  right: 24px;
   top: 50%;
   transform: translateY(-50%);
   z-index: 40;
@@ -375,7 +375,20 @@
 .journey-dot[data-active="true"] {
   background: var(--color-amber);
   border-color: var(--color-amber);
+  animation: journey-dot-arrive 420ms var(--ease-standard);
   transform: scale(1.15);
+}
+
+@keyframes journey-dot-arrive {
+  0% {
+    transform: scale(0.72);
+  }
+  55% {
+    transform: scale(1.35);
+  }
+  100% {
+    transform: scale(1.15);
+  }
 }
 
 .journey-line {
@@ -388,7 +401,7 @@
 
 .journey-label {
   position: absolute;
-  left: 18px;
+  right: 18px;
   top: 50%;
   transform: translateY(-50%);
   font-family: var(--font-mono);
@@ -396,20 +409,20 @@
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--color-muted-text);
-  opacity: 0;
+  opacity: var(--journey-label-opacity, 0);
   white-space: nowrap;
   transition:
-    opacity 250ms var(--ease-standard),
-    color 250ms var(--ease-standard);
+    opacity 360ms var(--ease-standard),
+    color 360ms var(--ease-standard),
+    transform 360ms var(--ease-standard);
 }
 
-.journey-item:hover .journey-label,
-.journey-item[data-active="true"] .journey-label {
-  opacity: 1;
-}
-
-.journey-item[data-active="true"] .journey-label {
+.journey-label[data-visible="true"] {
   color: var(--color-amber);
+}
+
+.journey-item[data-active="true"] .journey-label {
+  transform: translateY(-50%) translateX(-2px);
 }
 
 .btn-arrow {
@@ -474,6 +487,62 @@ button:hover .btn-arrow {
 .group:hover .participation-path p {
   color: color-mix(in oklab, var(--color-crisp) 78%, white);
   transform: translateY(-1px);
+}
+
+.contact-reveal-button {
+  transition:
+    color var(--motion-fast) var(--ease-standard),
+    transform var(--motion-fast) var(--ease-standard);
+}
+
+.contact-reveal-button:hover {
+  color: var(--color-crisp);
+  transform: translateX(2px);
+}
+
+.contact-links {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition:
+    grid-template-rows var(--motion-normal) var(--ease-standard),
+    opacity 250ms var(--ease-standard),
+    transform var(--motion-normal) var(--ease-standard);
+}
+
+.contact-links[data-expanded="true"] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.contact-links-inner {
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  padding-top: 20px;
+}
+
+.contact-link {
+  color: color-mix(in oklab, var(--color-crisp) 72%, transparent);
+  font-size: 1rem;
+  transition:
+    color var(--motion-fast) var(--ease-standard),
+    transform var(--motion-normal) var(--ease-standard),
+    opacity var(--motion-normal) var(--ease-standard);
+}
+
+.contact-links[data-expanded="true"] .contact-link {
+  transition-delay: var(--contact-link-delay, 0ms);
+}
+
+.contact-link:hover {
+  color: var(--color-amber);
+  transform: translateX(3px);
 }
 
 .knowledge-tree-node {
@@ -599,6 +668,18 @@ button:hover .btn-arrow {
   }
   .group:hover .participation-path h3::after {
     transform: scaleX(0);
+  }
+  .contact-links,
+  .contact-link,
+  .contact-reveal-button {
+    transition: none !important;
+    transform: none !important;
+  }
+  .journey-dot[data-active="true"] {
+    animation: none;
+  }
+  .journey-label {
+    transition: none !important;
   }
   a:hover .btn-arrow,
   button:hover .btn-arrow {

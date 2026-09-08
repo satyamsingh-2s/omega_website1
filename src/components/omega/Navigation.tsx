@@ -47,7 +47,7 @@ export function Navigation() {
         </nav>
 
         <a
-          href="#pricing"
+          href="#join"
           className="hidden rounded-full border border-amber/40 px-5 py-2 text-[14px] text-amber transition-[background-color,color,transform,box-shadow] duration-200 ease-[var(--ease-standard)] hover:bg-amber hover:text-[#100a00] hover:scale-[1.01] hover:shadow-[0_0_32px_-10px_var(--omega-amber)] md:inline-flex"
         >
           {nav.cta}
@@ -82,7 +82,7 @@ export function Navigation() {
               </a>
             ))}
             <a
-              href="#pricing"
+              href="#join"
               onClick={() => setOpen(false)}
               className="mt-2 inline-flex justify-center rounded-full bg-amber px-5 py-3 text-[15px] font-medium text-[#100a00] transition-transform duration-150 active:scale-[0.99]"
             >

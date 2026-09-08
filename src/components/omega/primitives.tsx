@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { assetImages } from "@/data/assetImages";
 
@@ -1224,6 +1224,63 @@ export function JourneyIndicator({
   sections: { id: string; label: string }[];
   activeIndex: number;
 }) {
+  const [labelOpacities, setLabelOpacities] = useState(() => sections.map(() => 0));
+
+  useEffect(() => {
+    let frameId: number | null = null;
+
+    const updateLabelOpacities = () => {
+      frameId = null;
+      const scrollPosition = window.scrollY;
+      const elements = sections.map((section) => document.getElementById(section.id));
+
+      setLabelOpacities(
+        elements.map((element, index) => {
+          if (!element) return 0;
+
+          const sectionTop = element.offsetTop;
+          const sectionHeight = element.offsetHeight;
+          const holdEnd = sectionTop + sectionHeight * 0.12;
+          const fadeEnd = sectionTop + sectionHeight * 0.45;
+
+          if (index === 0) {
+            if (scrollPosition <= holdEnd) return 1;
+            if (scrollPosition <= fadeEnd) {
+              return 1 - (scrollPosition - holdEnd) / (fadeEnd - holdEnd);
+            }
+            return 0;
+          }
+
+          const previous = elements[index - 1];
+          if (!previous) return 0;
+
+          const entranceStart = previous.offsetTop + previous.offsetHeight * 0.82;
+
+          if (scrollPosition < entranceStart || scrollPosition > fadeEnd) return 0;
+          if (scrollPosition <= sectionTop) {
+            return Math.min(1, (scrollPosition - entranceStart) / (sectionTop - entranceStart));
+          }
+
+          if (scrollPosition <= holdEnd) return 1;
+          return 1 - (scrollPosition - holdEnd) / (fadeEnd - holdEnd);
+        }),
+      );
+    };
+
+    const requestUpdate = () => {
+      if (frameId === null) frameId = window.requestAnimationFrame(updateLabelOpacities);
+    };
+
+    requestUpdate();
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+    return () => {
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+      if (frameId !== null) window.cancelAnimationFrame(frameId);
+    };
+  }, [sections]);
+
   return (
     <nav className="journey-indicator hidden xl:block" aria-label="Journey progress">
       <ol className="space-y-0">
@@ -1240,7 +1297,13 @@ export function JourneyIndicator({
             >
               <div className="journey-dot" data-active={i === activeIndex ? "true" : "false"} />
             </a>
-            <span className="journey-label">{section.label}</span>
+            <span
+              className="journey-label"
+              data-visible={(labelOpacities[i] ?? 0) > 0.01 ? "true" : "false"}
+              style={{ "--journey-label-opacity": labelOpacities[i] ?? 0 } as CSSProperties}
+            >
+              {section.label}
+            </span>
             {i < sections.length - 1 ? <div className="journey-line" /> : null}
           </li>
         ))}

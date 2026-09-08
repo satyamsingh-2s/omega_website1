@@ -11,6 +11,10 @@ type Img = { src: string; alt: string };
 
 /** Real product imagery keyed by the asset contract IDs from the design spec. */
 export const assetImages: Record<string, Img> = {
+  "ASSET 00": {
+    src: "/images/assest_01.png",
+    alt: "hero section",
+  },
   "ASSET 01": {
     src: "/images/assest_knowledge.png",
     alt: "Omega Knowledge Tree with nested topics and progress",
