@@ -357,6 +357,12 @@ export function Footer() {
           >
             Terms &amp; Conditions
           </a>
+          <a
+            href={footer.privacyHref}
+            className="transition-colors duration-150 ease-[var(--ease-ui)] hover:text-crisp/70 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber"
+          >
+            Privacy Policy
+          </a>
         </div>
       </div>
     </footer>

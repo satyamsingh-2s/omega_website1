@@ -328,10 +328,11 @@ export const footer = {
   logo: "OMEGA",
   statement: "Local-first. No trackers. Built for the long journey.",
   termsHref: "/terms",
+  privacyHref: "/privacy",
   links: [
     { label: "Product", href: "#features" },
     { label: "Roadmap", href: "#horizon" },
     { label: "Contact", href: "#builder" },
-    { label: "Privacy", href: "#privacy" },
+    { label: "Privacy", href: "/privacy" },
   ],
 };

@@ -132,7 +132,7 @@ const terms: TermsSection[] = [
   {
     title: "18. Privacy",
     paragraphs: [
-      "Omega's data practices are also described in its applicable Privacy Policy. The Privacy Policy should be read together with these Terms. The final Privacy Policy URL will be added when it is published.",
+      "Omega's data practices are also described in its applicable Privacy Policy. The Privacy Policy should be read together with these Terms.",
     ],
   },
   {
