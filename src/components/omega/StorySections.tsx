@@ -125,7 +125,7 @@ function PathStepList({
               >
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <div className="flex-1 min-w-0">
+              <div className="min-w-0 flex-1">
                 <span
                   className={cn(
                     "text-[17px] transition-colors duration-500",
@@ -135,7 +135,9 @@ function PathStepList({
                   {step}
                 </span>
                 {last && isOmega && active ? (
-                  <ActiveFlowIndicator label="JOURNEY CONTINUES" className="mt-2" />
+                  <div className="mt-3">
+                    <ActiveFlowIndicator label="JOURNEY CONTINUES" />
+                  </div>
                 ) : null}
                 {isAbandon && active ? (
                   <span className="block mt-2 micro-label text-muted-text/50 text-[10px]">

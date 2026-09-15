@@ -123,6 +123,7 @@ export function AssetFrame({
   glow = false,
   showDiagram,
   diagram,
+  showMetadata = true,
 }: {
   id: string;
   name: string;
@@ -133,6 +134,7 @@ export function AssetFrame({
   glow?: boolean;
   showDiagram?: "knowledge-tree" | "ai-structure" | "memory-stack" | "footprints";
   diagram?: ReactNode;
+  showMetadata?: boolean;
 }) {
   const image = assetImages[id];
   const frameRef = useRef<HTMLDivElement | null>(null);
@@ -179,13 +181,15 @@ export function AssetFrame({
             className="relative flex items-center justify-center bg-deep"
             style={{ aspectRatio: `${width} / ${height}` }}
           >
-            <div
-              className={cn(
-                "absolute inset-3 rounded-xl border border-dashed border-slate/40 transition-opacity duration-500",
-                contentVisible ? "opacity-100" : "opacity-0",
-              )}
-              aria-hidden
-            />
+            {showMetadata ? (
+              <div
+                className={cn(
+                  "absolute inset-3 rounded-xl border border-dashed border-slate/40 transition-opacity duration-500",
+                  contentVisible ? "opacity-100" : "opacity-0",
+                )}
+                aria-hidden
+              />
+            ) : null}
             <div
               className={cn(
                 "relative w-full h-full transition-opacity duration-500",
@@ -195,39 +199,41 @@ export function AssetFrame({
             >
               {diagram}
             </div>
-            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
-              <div>
+            {showMetadata ? (
+              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+                <div>
+                  <p
+                    className={cn(
+                      "micro-label text-amber/70 transition-opacity duration-500",
+                      contentVisible ? "opacity-100" : "opacity-0",
+                    )}
+                    style={{ transitionDelay: "150ms" }}
+                  >
+                    {id}
+                  </p>
+                  <p
+                    className={cn(
+                      "micro-label mt-1 text-crisp/70 transition-opacity duration-500",
+                      contentVisible ? "opacity-100" : "opacity-0",
+                    )}
+                    style={{ transitionDelay: "200ms" }}
+                  >
+                    {name}
+                  </p>
+                </div>
                 <p
                   className={cn(
-                    "micro-label text-amber/70 transition-opacity duration-500",
+                    "micro-label text-muted-text/70 text-right transition-opacity duration-500",
                     contentVisible ? "opacity-100" : "opacity-0",
                   )}
-                  style={{ transitionDelay: "150ms" }}
+                  style={{ transitionDelay: "250ms" }}
                 >
-                  {id}
-                </p>
-                <p
-                  className={cn(
-                    "micro-label mt-1 text-crisp/70 transition-opacity duration-500",
-                    contentVisible ? "opacity-100" : "opacity-0",
-                  )}
-                  style={{ transitionDelay: "200ms" }}
-                >
-                  {name}
+                  {width} × {height}
+                  <br />
+                  <span className="text-muted-text/50">RATIO {ratio}</span>
                 </p>
               </div>
-              <p
-                className={cn(
-                  "micro-label text-muted-text/70 text-right transition-opacity duration-500",
-                  contentVisible ? "opacity-100" : "opacity-0",
-                )}
-                style={{ transitionDelay: "250ms" }}
-              >
-                {width} × {height}
-                <br />
-                <span className="text-muted-text/50">RATIO {ratio}</span>
-              </p>
-            </div>
+            ) : null}
           </div>
         ) : image ? (
           <img
@@ -1055,20 +1061,6 @@ export function FootprintsDiagram() {
             </div>
           </div>
         ))}
-      </div>
-      <div
-        className="footprint-item mt-6 flex items-center justify-between rounded-lg border border-slate/70 bg-carbon/40 px-4 py-3"
-        data-visible="true"
-        style={{ transitionDelay: "1100ms" }}
-      >
-        <div>
-          <p className="micro-label text-muted-text text-[9px]">ACCUMULATED</p>
-          <p className="display-text text-crisp text-[18px] mt-0.5">22.8h</p>
-        </div>
-        <div className="text-right">
-          <p className="micro-label text-muted-text text-[9px]">EVIDENCE</p>
-          <p className="micro-label text-amber text-[10px] mt-0.5">PROGRESS VISIBLE</p>
-        </div>
       </div>
     </div>
   );

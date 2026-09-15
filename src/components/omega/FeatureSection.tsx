@@ -85,6 +85,7 @@ export function FeatureSection({ feature, index }: { feature: Feature; index: nu
               {...feature.asset}
               glow={feature.glow ?? false}
               diagram={diagram ?? undefined}
+              showMetadata={feature.number !== "06"}
             />
             {feature.extra ? (
               <div className="mt-6 sm:absolute sm:-bottom-10 sm:-right-8 sm:mt-0 sm:w-[320px]">

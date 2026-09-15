@@ -1,4 +1,4 @@
-import { useState, type CSSProperties } from "react";
+import { Globe, Linkedin, Mail } from "lucide-react";
 import {
   AssetFrame,
   Eyebrow,
@@ -209,8 +209,6 @@ export function FundingSection() {
 }
 
 export function AboutMeSection() {
-  const [contactExpanded, setContactExpanded] = useState(false);
-
   return (
     <SectionContainer id="builder" tone="void" size="major">
       <div className="max-w-[800px]">
@@ -245,36 +243,27 @@ export function AboutMeSection() {
                 </span>
               ))}
             </p>
-            <button
-              type="button"
-              aria-expanded={contactExpanded}
-              aria-controls="omega-contact-links"
-              onClick={() => setContactExpanded((expanded) => !expanded)}
-              className="contact-reveal-button mt-6 inline-flex items-center gap-2 text-[16px] font-medium text-amber focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber"
-            >
-              Get in touch <span aria-hidden>→</span>
-            </button>
             <div
-              id="omega-contact-links"
-              className="contact-links"
-              data-expanded={contactExpanded}
-              aria-hidden={!contactExpanded}
+              className="mt-7 flex flex-nowrap items-center gap-5 sm:gap-6"
+              aria-label="Contact links"
             >
-              <div className="contact-links-inner">
-                {founder.contactLinks.map((link, index) => (
+              {founder.contactLinks.map((link) => {
+                const Icon =
+                  link.label === "Email" ? Mail : link.label === "LinkedIn" ? Linkedin : Globe;
+
+                return (
                   <a
                     key={link.label}
                     href={link.href}
+                    aria-label={link.label}
                     target={link.href.startsWith("http") ? "_blank" : undefined}
                     rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                    className="contact-link"
-                    style={{ "--contact-link-delay": `${index * 60}ms` } as CSSProperties}
-                    tabIndex={contactExpanded ? 0 : -1}
+                    className="inline-flex h-9 w-9 shrink-0 items-center justify-center text-crisp/60 transition-colors duration-[var(--motion-fast)] ease-[var(--ease-standard)] hover:text-amber focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber"
                   >
-                    {link.label}
+                    <Icon aria-hidden="true" strokeWidth={1.5} size={20} />
                   </a>
-                ))}
-              </div>
+                );
+              })}
             </div>
           </div>
         </Reveal>
