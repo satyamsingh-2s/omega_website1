@@ -1,3 +1,6 @@
+export const appStoreUrl =
+  "https://play.google.com/store/apps/details?id=com.satyamsingh2s.productivity.omega&pcampaignid=web_share";
+
 export const nav = {
   logo: "OMEGA",
   links: [
@@ -7,6 +10,7 @@ export const nav = {
     { label: "The Future", href: "#horizon" },
   ],
   cta: "Join the journey →",
+  appCta: "Get the app →",
 };
 
 export const hero = {

@@ -9,6 +9,7 @@ import {
 } from "./primitives";
 import { cn } from "@/lib/utils";
 import {
+  appStoreUrl,
   finalStatement,
   footer,
   funding,
@@ -311,7 +312,9 @@ export function FinalStatementSection() {
         </Reveal>
         <Reveal delay={460}>
           <div className="mt-12">
-            <PrimaryButton size="lg">{finalStatement.cta}</PrimaryButton>
+            <PrimaryButton href={appStoreUrl} size="lg">
+              {finalStatement.cta}
+            </PrimaryButton>
           </div>
         </Reveal>
       </div>

@@ -9,7 +9,7 @@ import {
   AssetFrame,
   ActiveFlowIndicator,
 } from "./primitives";
-import { hero, problem, shift } from "@/data/landingContent";
+import { appStoreUrl, hero, problem, shift } from "@/data/landingContent";
 import { cn } from "@/lib/utils";
 
 export function HeroSection() {
@@ -42,7 +42,9 @@ export function HeroSection() {
           </Reveal>
           <Reveal delay={800}>
             <div className="mt-10 flex flex-wrap items-center gap-4">
-              <PrimaryButton size="lg">{hero.cta}</PrimaryButton>
+              <PrimaryButton href={appStoreUrl} size="lg">
+                {hero.cta}
+              </PrimaryButton>
               <SecondaryButton href="#problem">See the story</SecondaryButton>
             </div>
             <p className="micro-label mt-6">{hero.micro}</p>

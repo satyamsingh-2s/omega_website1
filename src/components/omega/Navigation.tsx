@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import { nav } from "@/data/landingContent";
+import { appStoreUrl, nav } from "@/data/landingContent";
 
 export function Navigation() {
   const [scrolled, setScrolled] = useState(false);
@@ -46,12 +46,20 @@ export function Navigation() {
           ))}
         </nav>
 
-        <a
-          href="#join"
-          className="hidden rounded-full border border-amber/40 px-5 py-2 text-[14px] text-amber transition-[background-color,color,transform,box-shadow] duration-200 ease-[var(--ease-standard)] hover:bg-amber hover:text-[#100a00] hover:scale-[1.01] hover:shadow-[0_0_32px_-10px_var(--omega-amber)] md:inline-flex"
-        >
-          {nav.cta}
-        </a>
+        <div className="hidden items-center gap-3 md:flex">
+          <a
+            href={appStoreUrl}
+            className="rounded-full bg-amber px-5 py-2 text-[14px] font-medium text-[#100a00] transition-[transform,box-shadow] duration-200 ease-[var(--ease-standard)] hover:scale-[1.01] hover:shadow-[0_0_32px_-10px_var(--omega-amber)]"
+          >
+            {nav.appCta}
+          </a>
+          <a
+            href="#join"
+            className="rounded-full border border-amber/40 px-5 py-2 text-[14px] text-amber transition-[background-color,color,transform,box-shadow] duration-200 ease-[var(--ease-standard)] hover:bg-amber hover:text-[#100a00] hover:scale-[1.01] hover:shadow-[0_0_32px_-10px_var(--omega-amber)]"
+          >
+            {nav.cta}
+          </a>
+        </div>
 
         <button
           type="button"
@@ -87,6 +95,13 @@ export function Navigation() {
               className="mt-2 inline-flex justify-center rounded-full bg-amber px-5 py-3 text-[15px] font-medium text-[#100a00] transition-transform duration-150 active:scale-[0.99]"
             >
               {nav.cta}
+            </a>
+            <a
+              href={appStoreUrl}
+              onClick={() => setOpen(false)}
+              className="inline-flex justify-center rounded-full border border-amber/40 px-5 py-3 text-[15px] font-medium text-amber transition-transform duration-150 active:scale-[0.99]"
+            >
+              {nav.appCta}
             </a>
           </div>
         </div>
