@@ -2,6 +2,7 @@ import { Globe, Linkedin, Mail } from "lucide-react";
 import {
   AssetFrame,
   Eyebrow,
+  GooglePlayBadge,
   PrimaryButton,
   Reveal,
   SectionContainer,
@@ -312,9 +313,7 @@ export function FinalStatementSection() {
         </Reveal>
         <Reveal delay={460}>
           <div className="mt-12">
-            <PrimaryButton href={appStoreUrl} size="lg">
-              {finalStatement.cta}
-            </PrimaryButton>
+            <GooglePlayBadge href={appStoreUrl} />
           </div>
         </Reveal>
       </div>

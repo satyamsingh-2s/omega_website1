@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import {
   Eyebrow,
-  PrimaryButton,
   Reveal,
   SecondaryButton,
   SectionContainer,
   StoryPanel,
   AssetFrame,
   ActiveFlowIndicator,
+  GooglePlayBadge,
 } from "./primitives";
 import { appStoreUrl, hero, problem, shift } from "@/data/landingContent";
 import { cn } from "@/lib/utils";
@@ -42,12 +42,10 @@ export function HeroSection() {
           </Reveal>
           <Reveal delay={800}>
             <div className="mt-10 flex flex-wrap items-center gap-4">
-              <PrimaryButton href={appStoreUrl} size="lg">
-                {hero.cta}
-              </PrimaryButton>
+              <GooglePlayBadge href={appStoreUrl} />
               <SecondaryButton href="#problem">See the story</SecondaryButton>
             </div>
-            <p className="micro-label mt-6">{hero.micro}</p>
+            <p className="micro-label mt-6">Available on Google Play · {hero.micro}</p>
           </Reveal>
         </div>
 

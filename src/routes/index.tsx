@@ -15,11 +15,29 @@ import {
   SystemFlowSection,
 } from "@/components/omega/ClosingSections";
 import { JourneyIndicator } from "@/components/omega/primitives";
-import { features } from "@/data/landingContent";
+import { appStoreUrl, features } from "@/data/landingContent";
 
-const title = "Omega — Personal Journey Assistant";
+const title = "Omega — Personal Journey Assistant for Android";
 const description =
-  "Structure. Focus. Flow. Omega is a local-first personal journey assistant that preserves the structure, work, and context of long projects so you can always continue.";
+  "Omega is a local-first personal journey assistant for Android, available on Google Play. Structure, focus, and preserve the context of long projects so you can always continue.";
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Omega",
+  applicationCategory: "ProductivityApplication",
+  operatingSystem: "Android",
+  description,
+  downloadUrl: appStoreUrl,
+  url: appStoreUrl,
+  author: {
+    "@type": "Person",
+    name: "Satyam Singh",
+    jobTitle: "Founder and Builder of Omega",
+    url: "https://www.satyamsingh2s.xyz/",
+    sameAs: ["https://www.linkedin.com/in/satyamsingh-2s"],
+  },
+};
 
 const journeySections = [
   { id: "top", label: "01 · Omega" },
@@ -79,6 +97,8 @@ export const Route = createFileRoute("/")({
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "author", content: "Satyam Singh" },
+      { "script:ld+json": structuredData },
     ],
   }),
   component: Index,

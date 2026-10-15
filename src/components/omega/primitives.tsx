@@ -1142,6 +1142,29 @@ export function PrimaryButton({
   );
 }
 
+export function GooglePlayBadge({ href, className }: { href: string; className?: string }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Get Omega on Google Play"
+      className={cn(
+        "inline-flex rounded-[7px] transition-transform duration-[var(--motion-fast)] ease-[var(--ease-standard)] hover:scale-[1.02] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber",
+        className,
+      )}
+    >
+      <img
+        src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+        alt="Get it on Google Play"
+        width={200}
+        height={59}
+        className="h-auto w-[180px] sm:w-[200px]"
+      />
+    </a>
+  );
+}
+
 export function SecondaryButton({
   children,
   href = "#system",

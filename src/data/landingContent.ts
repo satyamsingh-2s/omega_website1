@@ -314,7 +314,7 @@ export const founder = {
   contactLinks: [
     { label: "Email", href: "mailto:satyamsingh92637@gmail.com" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/satyamsingh-2s" },
-    { label: "My Website", href: "https://satyamsingh2s.xyz" },
+    { label: "My Website", href: "https://www.satyamsingh2s.xyz/" },
   ],
 };
 
