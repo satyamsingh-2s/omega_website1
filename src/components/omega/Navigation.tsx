@@ -5,14 +5,31 @@ import { appStoreUrl, nav } from "@/data/landingContent";
 export function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    let lastScrollY = window.scrollY;
+
+    const onScroll = () => {
+      const scrollY = window.scrollY;
+      const scrollDifference = scrollY - lastScrollY;
+
+      setScrolled(scrollY > 24);
+
+      if (scrollY <= 72 || open) {
+        setHidden(false);
+      } else if (Math.abs(scrollDifference) >= 8) {
+        setHidden(scrollDifference > 0);
+      }
+
+      lastScrollY = scrollY;
+    };
+
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [open]);
 
   useEffect(() => {
     const t = setTimeout(() => setVisible(true), 50);
@@ -22,12 +39,13 @@ export function Navigation() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 reveal-nav transition-colors duration-300 ease-[var(--ease-soft)]",
+        "fixed inset-x-0 top-0 z-50 reveal-nav bg-gradient-to-b transition-[background-color,backdrop-filter] duration-300 ease-[var(--ease-soft)]",
         scrolled
-          ? "border-b border-slate/70 bg-void/85 backdrop-blur-md"
-          : "border-b border-transparent",
+          ? "from-void/65 via-void/45 to-transparent backdrop-blur-xl"
+          : "from-void/25 via-void/15 to-transparent backdrop-blur-sm",
       )}
       data-visible={visible ? "true" : "false"}
+      data-hidden={hidden ? "true" : "false"}
     >
       <div className="container-omega flex h-16 items-center justify-between md:h-[72px]">
         <a href="#top" className="micro-label text-[13px] tracking-[0.32em] text-crisp">
@@ -65,7 +83,10 @@ export function Navigation() {
           type="button"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
+          onClick={() => {
+            setHidden(false);
+            setOpen((v) => !v);
+          }}
           className="flex h-9 w-9 items-center justify-center rounded-full border border-slate md:hidden transition-transform duration-150 active:scale-95"
         >
           <span className="sr-only">Menu</span>

@@ -221,6 +221,12 @@
   transform: translateY(0);
 }
 
+.reveal-nav[data-hidden="true"] {
+  opacity: 0;
+  transform: translateY(-110%);
+  pointer-events: none;
+}
+
 .reveal-soft {
   opacity: 0;
   transition: opacity 500ms var(--ease-standard);
@@ -639,6 +645,10 @@ button:hover .btn-arrow {
     transform: none !important;
     filter: blur(0) !important;
     transition: none !important;
+  }
+  .reveal-nav[data-hidden="true"] {
+    opacity: 0 !important;
+    transform: translateY(-110%) !important;
   }
   .flow-pulse {
     animation: none;
