@@ -313,7 +313,7 @@ export const founder = {
   contactPrompt: ["Have a question about Omega?", "Want to build something together?"],
   contactLinks: [
     { label: "Email", href: "mailto:satyamsingh92637@gmail.com" },
-    { label: "LinkedIn", href: "https://www.linkedin.com/in/satyamsingh-2s" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/satyamsingh-2ss" },
     { label: "My Website", href: "https://www.satyamsingh2s.xyz/" },
   ],
 };

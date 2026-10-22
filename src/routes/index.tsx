@@ -35,7 +35,7 @@ const structuredData = {
     name: "Satyam Singh",
     jobTitle: "Founder and Builder of Omega",
     url: "https://www.satyamsingh2s.xyz/",
-    sameAs: ["https://www.linkedin.com/in/satyamsingh-2s"],
+    sameAs: ["https://www.linkedin.com/in/satyamsingh-2ss"],
   },
 };
 
